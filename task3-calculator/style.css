@@ -1,0 +1,272 @@
+:root {
+    --calc-bg: #f67cbd;
+    --btn-bg: rgba(255, 255, 255, 0.7);
+    --btn-hover: rgba(255, 255, 255, 0.9);
+    --operator-bg: #e22d5a;
+    --operator-hover: #f6b7c7;
+    --equals-bg: #c9184a;
+    --equals-hover: #f24848;
+    --text-dark: #333;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Gradient background */
+    background: linear-gradient(135deg, #ff9a9e, #fecfef, #a18cd1, #fbc2eb, #8fd3f4);
+    background-size: 300% 300%;
+    animation: gradientBG 15s ease infinite;
+    overflow: hidden;
+    position: relative;
+}
+
+@keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Background Symbols and Emojis */
+.bg-element {
+    position: absolute;
+    z-index: 0;
+    opacity: 0.4;
+    font-size: 3rem;
+    pointer-events: none;
+    user-select: none;
+    animation: float 8s infinite ease-in-out alternate;
+}
+
+@keyframes float {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(-30px) rotate(20deg); }
+}
+
+/* Positioning Emojis */
+.e1 { top: 10%; left: 10%; animation-delay: 0s; font-size: 4rem; }
+.e2 { top: 20%; right: 15%; animation-delay: 1s; font-size: 3.5rem; }
+.e3 { bottom: 15%; left: 20%; animation-delay: 2s; font-size: 5rem; }
+.e4 { bottom: 10%; right: 10%; animation-delay: 3s; font-size: 4rem; }
+.e5 { top: 40%; left: 5%; animation-delay: 0.5s; font-size: 3rem; }
+.e6 { top: 50%; right: 5%; animation-delay: 1.5s; font-size: 3rem; }
+.e7 { top: 5%; left: 50%; animation-delay: 2.5s; font-size: 3.5rem; }
+.e8 { bottom: 5%; left: 50%; animation-delay: 0.8s; font-size: 4.5rem; }
+
+/* Main Layout */
+.app-container {
+    display: flex;
+    gap: 20px;
+    z-index: 10;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    max-width: 900px;
+    width: 100%;
+}
+
+/* Calculator Styles */
+.calculator {
+    background-color: var(--calc-bg);
+    padding: 20px;
+    border-radius: 25px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.2), inset 0 0 10px rgba(255,255,255,0.5);
+    width: 320px;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(5px);
+}
+
+.display {
+    background-color: rgba(255, 255, 255, 0.85);
+    border-radius: 15px;
+    padding: 20px;
+    margin-bottom: 20px;
+    text-align: right;
+    box-shadow: inset 0 4px 10px rgba(0,0,0,0.1);
+    word-wrap: break-word;
+    word-break: break-all;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.previous-operand {
+    color: #666;
+    font-size: 1.2rem;
+    min-height: 1.5rem;
+}
+
+.current-operand {
+    color: var(--text-dark);
+    font-size: 2.5rem;
+    font-weight: bold;
+}
+
+.buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 12px;
+}
+
+button {
+    cursor: pointer;
+    border: none;
+    outline: none;
+    background-color: var(--btn-bg);
+    border-radius: 12px;
+    font-size: 1.5rem;
+    padding: 15px 0;
+    color: var(--text-dark);
+    font-weight: 600;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+button:hover {
+    background-color: var(--btn-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+button:active {
+    transform: translateY(1px);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.span-two {
+    grid-column: span 2;
+}
+
+.operator {
+    background-color: var(--operator-bg);
+    color: white;
+}
+
+.operator:hover {
+    background-color: var(--operator-hover);
+}
+
+.equals {
+    background-color: var(--equals-bg);
+    color: white;
+}
+
+.equals:hover {
+    background-color: var(--equals-hover);
+}
+
+.clear-btn {
+    background-color: #ff4d6d;
+    color: white;
+}
+
+.clear-btn:hover {
+    background-color: #c9184a;
+}
+
+/* History Panel */
+.history-panel {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 20px;
+    border-radius: 25px;
+    width: 300px;
+    height: 480px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+    display: flex;
+    flex-direction: column;
+    border: 2px solid rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(10px);
+}
+
+.history-panel h2 {
+    margin-bottom: 15px;
+    color: var(--text-dark);
+    text-align: center;
+    font-size: 1.5rem;
+    border-bottom: 2px solid var(--calc-bg);
+    padding-bottom: 10px;
+}
+
+.history-list {
+    list-style: none;
+    overflow-y: auto;
+    flex-grow: 1;
+    margin-bottom: 15px;
+    padding-right: 5px;
+}
+
+/* Custom Scrollbar for History */
+.history-list::-webkit-scrollbar {
+    width: 6px;
+}
+.history-list::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.05);
+    border-radius: 10px;
+}
+.history-list::-webkit-scrollbar-thumb {
+    background: var(--calc-bg);
+    border-radius: 10px;
+}
+
+.history-item {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+    color: #555;
+    font-size: 1.1rem;
+    animation: fadeIn 0.3s ease;
+    text-align: right;
+}
+
+.history-equation {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+.history-result {
+    font-weight: bold;
+    color: var(--equals-bg);
+    font-size: 1.2rem;
+}
+
+.clear-history-btn {
+    background-color: var(--operator-bg);
+    color: white;
+    padding: 10px;
+    border-radius: 12px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-weight: bold;
+}
+
+.clear-history-btn:hover {
+    background-color: var(--operator-hover);
+    transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 650px) {
+    .app-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .history-panel {
+        height: 300px;
+    }
+}
